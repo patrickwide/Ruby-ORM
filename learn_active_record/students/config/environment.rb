@@ -1,10 +1,13 @@
-require 'sqlite3'
+require 'yaml'
 require 'active_record'
 
-# Establish the database connection
-database_path = File.expand_path('../db/students.db', __dir__)
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: database_path)
+# Load the database configuration from YAML file
+config = YAML.load_file(File.expand_path('database.yml', __dir__))
 
+# Establish the connection using the configuration for the current environment
+ActiveRecord::Base.establish_connection(config[ENV['RACK_ENV'] || 'development'])
+
+# Create a table if it doesn't exist
 sql = <<-SQL
   CREATE TABLE IF NOT EXISTS students (
     id INTEGER PRIMARY KEY,
