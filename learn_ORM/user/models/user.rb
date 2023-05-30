@@ -18,7 +18,7 @@ class User
         email TEXT
       );
     SQL
-    
+
     $db.execute(create_table_sql)
   end
 

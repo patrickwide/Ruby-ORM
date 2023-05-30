@@ -1,0 +1,40 @@
+# require './config/environment'  # Load the environment file
+
+namespace :db do
+  desc 'Create a new migration'
+  task :create_migration do
+    migration_name = ENV['NAME']
+    if migration_name.nil? || migration_name.empty?
+      puts 'Please provide a migration name: rake db:create_migration NAME=create_drivers'
+    else
+      require 'sinatra/activerecord/rake'
+      ActiveRecord::Migration.create_migration(migration_name, 'db/migrate', ENV['VERSION'])
+    end
+  end
+
+  desc 'Run database migrations'
+  task :migrate do
+    require 'sinatra/activerecord/rake'
+    ActiveRecord::Migration.verbose = true
+    ActiveRecord::Migrator.migrate('db/migrate')
+  end
+
+  desc 'Seed the database'
+  task :seed do
+    require './db/seeds.rb'
+  end
+
+  desc 'Replant seeds in the database'
+  task 'seed:replant' do
+    require 'sinatra/activerecord/rake'
+    Rake::Task['db:reset'].invoke
+    Rake::Task['db:seed'].invoke
+  end
+end
+
+task :default => :help
+
+desc 'Display available tasks'
+task :help do
+  system('rake -T')
+end

@@ -1,0 +1,22 @@
+desc 'This is my task 1 description'
+task :my_task_1 do
+    # Task implementation
+    puts 'Hello world'
+end
+
+desc 'This is my dependency task description'
+task :dependency_task do
+    puts "Executing dependency_task..."
+end
+
+desc 'This is my my task 2 description'
+task :my_task_2 => [:dependency_task] do
+    puts "Executing my_task..."
+end
+
+namespace :my_namespace do
+    desc 'This is my my task description'
+    task :my_task do
+      puts "Executing my_task within my_namespace..."
+    end
+end
