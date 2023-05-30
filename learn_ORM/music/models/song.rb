@@ -51,7 +51,7 @@ class Song
 
 end
 
-# Create the songs table
+# # Create the songs table
 # Song.create_table
 
 # Example usage:
