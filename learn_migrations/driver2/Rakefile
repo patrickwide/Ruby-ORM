@@ -6,23 +6,33 @@ namespace :drivers do
     task :fetch_all do
       drivers = Driver.all
       drivers.each do |driver|
-        puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
+        puts "Driver ID: #{driver.id}"
+        puts "Driver Name: #{driver.driver_name}"
+        puts "Phone Number: #{driver.phone_no}"
+        puts "License: #{driver.license}"
+        puts "Status: #{driver.status}"
+        puts "------------------------"
       end
     end
   
     desc 'Fetch drivers by a specific attribute'
     task :fetch_by_attribute, [:attribute, :value] do |_, args|
-        begin
-            attribute = args[:attribute]
-            value = args[:value]
-      
-            drivers = Driver.where(attribute => value)
-            drivers.each do |driver|
-              puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
-            end
-        rescue StandardError => e
-            puts "Error: #{e.message}"
+      begin
+        attribute = args[:attribute]
+        value = args[:value]
+  
+        drivers = Driver.where(attribute => value)
+        drivers.each do |driver|
+          puts "Driver ID: #{driver.id}"
+          puts "Driver Name: #{driver.driver_name}"
+          puts "Phone Number: #{driver.phone_no}"
+          puts "License: #{driver.license}"
+          puts "Status: #{driver.status}"
+          puts "------------------------"
         end
+      rescue StandardError => e
+        puts "Error: #{e.message}"
+      end
     end
   
     desc 'Fetch a driver by ID'
@@ -31,9 +41,190 @@ namespace :drivers do
   
       driver = Driver.find_by(id: driver_id)
       if driver
-        puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
+        puts "Driver ID: #{driver.id}"
+        puts "Driver Name: #{driver.driver_name}"
+        puts "Phone Number: #{driver.phone_no}"
+        puts "License: #{driver.license}"
+        puts "Status: #{driver.status}"
+        puts "------------------------"
       else
         puts "Driver not found with ID #{driver_id}"
+      end
+    end
+end
+
+namespace :cars do
+    desc 'Fetch all cars from the database and display their details'
+    task :fetch_all do
+      cars = Car.all
+      cars.each do |car|
+        puts "Car ID: #{car.id}"
+        puts "Driver ID: #{car.driver_id}"
+        puts "Numberplate: #{car.numberplate}"
+        puts "Color: #{car.color}"
+        puts "Model: #{car.model}"
+        puts "No. of Seats: #{car.no_of_seats}"
+        puts "------------------------"
+      end
+    end
+  
+    desc 'Fetch cars by a specific attribute'
+    task :fetch_by_attribute, [:attribute, :value] do |_, args|
+      begin
+        attribute = args[:attribute]
+        value = args[:value]
+  
+        cars = Car.where(attribute => value)
+        cars.each do |car|
+          puts "Car ID: #{car.id}"
+          puts "Driver ID: #{car.driver_id}"
+          puts "Numberplate: #{car.numberplate}"
+          puts "Color: #{car.color}"
+          puts "Model: #{car.model}"
+          puts "No. of Seats: #{car.no_of_seats}"
+          puts "------------------------"
+        end
+      rescue StandardError => e
+        puts "Error: #{e.message}"
+      end
+    end
+  
+    desc 'Fetch a car by ID'
+    task :fetch_by_id, [:id] do |_, args|
+      car_id = args[:id]
+  
+      car = Car.find_by(id: car_id)
+      if car
+        puts "Car ID: #{car.id}"
+        puts "Driver ID: #{car.driver_id}"
+        puts "Numberplate: #{car.numberplate}"
+        puts "Color: #{car.color}"
+        puts "Model: #{car.model}"
+        puts "No. of Seats: #{car.no_of_seats}"
+        puts "------------------------"
+      else
+        puts "Car not found with ID #{car_id}"
+      end
+    end
+
+    desc 'Fetch the driver name for a specific car'
+    task :fetch_driver_name, [:car_id] do |_, args|
+        car_id = args[:car_id]
+
+        car = Car.find_by(id: car_id)
+        if car
+            driver_name = car.driver_name    
+            if driver_name
+                puts "Driver Name for Car ID #{car_id}: #{driver_name}"
+            else
+                puts "No driver associated with Car ID #{car_id}"
+            end
+        else
+            puts "Car not found with ID #{car_id}"
+        end
+    end
+end
+
+namespace :customers do
+    desc 'Fetch all customers from the database and display their details'
+    task :fetch_all do
+      customers = Customer.all
+      customers.each do |customer|
+        puts "Customer ID: #{customer.id}"
+        puts "Customer Name: #{customer.customer_name}"
+        puts "Phone Number: #{customer.phone_no}"
+        puts "------------------------"
+      end
+    end
+  
+    desc 'Fetch customers by a specific attribute'
+    task :fetch_by_attribute, [:attribute, :value] do |_, args|
+      begin
+        attribute = args[:attribute]
+        value = args[:value]
+  
+        customers = Customer.where(attribute => value)
+        customers.each do |customer|
+          puts "Customer ID: #{customer.id}"
+          puts "Customer Name: #{customer.customer_name}"
+          puts "Phone Number: #{customer.phone_no}"
+          puts "------------------------"
+        end
+      rescue StandardError => e
+        puts "Error: #{e.message}"
+      end
+    end
+  
+    desc 'Fetch a customer by ID'
+    task :fetch_by_id, [:id] do |_, args|
+      customer_id = args[:id]
+  
+      customer = Customer.find_by(id: customer_id)
+      if customer
+        puts "Customer ID: #{customer.id}"
+        puts "Customer Name: #{customer.customer_name}"
+        puts "Phone Number: #{customer.phone_no}"
+        puts "------------------------"
+      else
+        puts "Customer not found with ID #{customer_id}"
+      end
+    end
+end
+  
+namespace :trips do
+    desc 'Fetch all trips from the database and display their details'
+    task :fetch_all do
+      trips = Trip.all
+      trips.each do |trip|
+        puts "Trip ID: #{trip.id}"
+        puts "Customer ID: #{trip.customer_id}"
+        puts "Car ID: #{trip.car_id}"
+        puts "Destination: #{trip.destination}"
+        puts "Pick-up Location: #{trip.pick_up_location}"
+        puts "Price: #{trip.price}"
+        puts "Total Passengers: #{trip.total_passengers}"
+        puts "------------------------"
+      end
+    end
+  
+    desc 'Fetch trips by a specific attribute'
+    task :fetch_by_attribute, [:attribute, :value] do |_, args|
+      begin
+        attribute = args[:attribute]
+        value = args[:value]
+  
+        trips = Trip.where(attribute => value)
+        trips.each do |trip|
+          puts "Trip ID: #{trip.id}"
+          puts "Customer ID: #{trip.customer_id}"
+          puts "Car ID: #{trip.car_id}"
+          puts "Destination: #{trip.destination}"
+          puts "Pick-up Location: #{trip.pick_up_location}"
+          puts "Price: #{trip.price}"
+          puts "Total Passengers: #{trip.total_passengers}"
+          puts "------------------------"
+        end
+      rescue StandardError => e
+        puts "Error: #{e.message}"
+      end
+    end
+  
+    desc 'Fetch a trip by ID'
+    task :fetch_by_id, [:id] do |_, args|
+      trip_id = args[:id]
+  
+      trip = Trip.find_by(id: trip_id)
+      if trip
+        puts "Trip ID: #{trip.id}"
+        puts "Customer ID: #{trip.customer_id}"
+        puts "Car ID: #{trip.car_id}"
+        puts "Destination: #{trip.destination}"
+        puts "Pick-up Location: #{trip.pick_up_location}"
+        puts "Price: #{trip.price}"
+        puts "Total Passengers: #{trip.total_passengers}"
+        puts "------------------------"
+      else
+        puts "Trip not found with ID #{trip_id}"
       end
     end
 end
