@@ -1,0 +1,40 @@
+require 'sinatra/activerecord/rake'
+require_relative './config/environment'
+
+namespace :drivers do
+    desc 'Fetch all drivers from the database and display their details'
+    task :fetch_all do
+      drivers = Driver.all
+      drivers.each do |driver|
+        puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
+      end
+    end
+  
+    desc 'Fetch drivers by a specific attribute'
+    task :fetch_by_attribute, [:attribute, :value] do |_, args|
+        begin
+            attribute = args[:attribute]
+            value = args[:value]
+      
+            drivers = Driver.where(attribute => value)
+            drivers.each do |driver|
+              puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
+            end
+        rescue StandardError => e
+            puts "Error: #{e.message}"
+        end
+    end
+  
+    desc 'Fetch a driver by ID'
+    task :fetch_by_id, [:id] do |_, args|
+      driver_id = args[:id]
+  
+      driver = Driver.find_by(id: driver_id)
+      if driver
+        puts "Driver - Name: #{driver.name}, Email: #{driver.email}, Age: #{driver.age}"
+      else
+        puts "Driver not found with ID #{driver_id}"
+      end
+    end
+end
+  

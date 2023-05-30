@@ -1,22 +1,45 @@
 desc 'This is my task 1 description'
 task :my_task_1 do
     # Task implementation
-    puts 'Hello world'
+    puts 'Executing my task 1...'
 end
 
-desc 'This is my dependency task description'
-task :dependency_task do
-    puts "Executing dependency_task..."
+desc 'This is my dependency task 2 description'
+task :dependency_task_1 do
+    puts "Executing dependency task 1..."
+end
+
+desc 'This is my dependency task 2 description'
+task :dependency_task_2 do
+    puts "Executing dependency task 2..."
 end
 
 desc 'This is my my task 2 description'
-task :my_task_2 => [:dependency_task] do
-    puts "Executing my_task..."
+task :my_task_2 => [:dependency_task_1,:dependency_task_2 ] do
+    puts "Executing my task 2..."
 end
 
 namespace :my_namespace do
-    desc 'This is my my task description'
-    task :my_task do
-      puts "Executing my_task within my_namespace..."
+    desc 'This is my task 1 description within my namespace'
+    task :my_task_1 do
+      puts "Executing my task 1 within my namespace..."
     end
+
+    desc 'This is my task 2 description within my namespace'
+    task :my_task_2 do
+      puts "Executing my task 1 within my namespace..."
+    end
+end
+
+desc "Greet with name and age"
+task :greet, [:name, :age] do |task, args|
+  # Extract the name and age from the args object, using a default value if not provided
+  name = args[:name] || 'John'
+  age = args[:age] || 21
+
+  # Format the greeting message using string interpolation
+  greeting = "Hello, my name is #{name} and I am #{age} years old."
+
+  # Output the greeting
+  puts greeting
 end
