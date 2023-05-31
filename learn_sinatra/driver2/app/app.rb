@@ -10,7 +10,7 @@ require_relative 'models/car'
 require_relative 'models/customer'
 require_relative 'models/trip'
 
-class MyApp < Sinatra::Base
+class TaxiApp < Sinatra::Base
   use DriversController
   use CarsController
   use CustomersController
@@ -19,8 +19,7 @@ class MyApp < Sinatra::Base
   get '/' do
     { message: 'Hello, World!' }.to_json
   end
-  
 
 end
 
-MyApp.run!
+TaxiApp.run!
