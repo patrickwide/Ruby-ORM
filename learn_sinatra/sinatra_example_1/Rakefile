@@ -1,0 +1,57 @@
+require 'rake'
+require 'json'
+
+API_BASE_URL = 'https://patrickwide-miniature-space-parakeet-v7r6qg79jpqf6pgv-4567.preview.app.github.dev/' # Replace this with your port
+
+namespace :api do
+  desc 'Test the root endpoint'
+  task :test_root_endpoint do
+    # Make a GET request to the root endpoint
+    result = `curl -X GET #{API_BASE_URL}`
+
+    # Print the response
+    puts result
+  end
+
+  desc 'Test creating a user'
+  task :test_create_user do
+    # Prepare data for the request
+    user_data = { name: 'John Doe', email: 'johndoe@example.com' }.to_json
+
+    # Make a POST request to create a user
+    result = `curl -X POST -H 'Content-Type: application/json' -d '#{user_data}' #{API_BASE_URL}/users`
+
+    # Print the response
+    puts result
+  end
+
+  desc 'Test updating a user'
+  task :test_update_user do
+    # Prepare data for the request
+    user_data = { name: 'Updated Name' }.to_json
+
+    # Make a PATCH request to update a user
+    result = `curl -X PATCH -H 'Content-Type: application/json' -d '#{user_data}' #{API_BASE_URL}/users/1`
+
+    # Print the response
+    puts result
+  end
+
+  desc 'Test deleting a user'
+  task :test_delete_user do
+    # Make a DELETE request to delete a user
+    result = `curl -X DELETE #{API_BASE_URL}/users/1`
+
+    # Print the response
+    puts result
+  end
+
+  desc 'Test retrieving a user'
+  task :test_retrieve_user do
+    # Make a GET request to retrieve a user with ID 1
+    result = `curl -X GET #{API_BASE_URL}/users/1`
+
+    # Print the response
+    puts result
+  end
+end
