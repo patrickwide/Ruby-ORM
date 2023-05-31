@@ -16,6 +16,11 @@ class MyApp < Sinatra::Base
   use CustomersController
   use TripsController
 
+  get '/' do
+    { message: 'Hello, World!' }.to_json
+  end
+  
+
 end
 
 MyApp.run!
