@@ -14,7 +14,7 @@ task :dependency_task_2 do
     puts "Executing dependency task 2..."
 end
 
-desc 'This is my my task 2 description'
+desc 'This is my task 2 description'
 task :my_task_2 => [:dependency_task_1,:dependency_task_2 ] do
     puts "Executing my task 2..."
 end
@@ -32,7 +32,7 @@ namespace :my_namespace do
 end
 
 desc "Greet with name and age"
-task :greet, [:name, :age] do |task, args|
+task :greet, [:name, :age] do |_, args|
   # Extract the name and age from the args object, using a default value if not provided
   name = args[:name] || 'John'
   age = args[:age] || 21

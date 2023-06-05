@@ -3,7 +3,7 @@ class CreateDrivers < ActiveRecord::Migration[7.0]
     create_table :drivers do |t|
       t.string :name
       t.string :email
-      t.timestamps
+      t.string :age
     end
   end
 end
